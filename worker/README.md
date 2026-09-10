@@ -110,6 +110,8 @@ npm run secret:jwt
 |---|---|---|
 | `binding DB of type d1 must have a valid database_id [code: 10021]` | `wrangler.toml` 的 `database_id` 还是占位符 | 按上面 ① 回填真实 uuid 后重新推送 |
 | `Failed to match Worker name` | `wrangler.toml` 的 `name` 与 CI 不一致 | 保持 `name = "findma"` |
+| 部署日志提示 `your 'workers.dev' route is disabled` | 配置里有 custom domain 时，Cloudflare 会顺手关掉 workers.dev | 正常现象；本项目的 workers.dev 在大陆本就不通，已在配置里显式写 `workers_dev = false` |
+| `dl.izao.cc` 解析不出来 | 该子域还没配 DNS | 应用内更新的下载地址，需要单独配好并在证书覆盖范围内 |
 | 部署成功但登录返回 `SERVER_MISCONFIGURED` | 没写 `JWT_SECRET` | 按上面 ③ 执行 `npm run secret:jwt` |
 | `You are about to publish a Workers Service that was last published via the Cloudflare Dashboard` | Worker 最早是在 Dashboard 建的 | 正常提示，确认即可；之后以仓库配置为准 |
 | 改了 `database_id` 后本地表"消失" | 本地 D1 文件按 `database_id` 哈希命名存放 | 重跑 `npm run db:init:local` |
