@@ -43,16 +43,25 @@ cd worker
 bash scripts/smoke.sh
 ```
 
-部署：
+部署（已接入 **Workers Builds**：推送 `main` 会自动部署，也可以手动跑）：
 
 ```bash
-npm run db:init:remote        # 远端建表
-npm run secret:jwt            # 写入 JWT_SECRET（不要写进 wrangler.toml）
-npm run deploy
+cd worker
+npm run db:init:remote        # ① 远端建表（只影响云端，--local 才是本地）
+npm run secret:jwt            # ② 写入 JWT_SECRET（不要写进 wrangler.toml）
+npm run deploy                # ③ 手动部署（CI 会自动执行这一步）
 ```
 
+> ⚠️ **`wrangler.toml` 里有两处必须与线上一致，否则 CI 直接失败**：
+> - `name = "findma"` —— Workers Builds 侧固定的 Worker 名，不一致时 CI 会覆盖它并尝试自动提 PR
+> - `database_id` —— 必须是 D1 的真实 UUID，留占位符会报
+>   `binding DB of type d1 must have a valid database_id [code: 10021]`
+>   用 `npx wrangler d1 list` 查已有库的 uuid。
+>
 > ⚠️ **必须绑定自定义域名**（DESIGN 11 章）：`*.workers.dev` 在大陆访问不稳定。
-> 在 Cloudflare Dashboard → Workers → findma-worker → Settings → Domains & Routes 添加。
+> 在 Cloudflare Dashboard → Workers → findma → Settings → Domains & Routes 添加。
+>
+> 详细的部署步骤与常见报错见 [`worker/README.md`](worker/README.md#部署到-cloudflare)。
 
 ### 2. 老人端（Android）
 

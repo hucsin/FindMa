@@ -1,5 +1,7 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "findma-worker"
+# 注意：Workers Builds（CI）侧期望的 Worker 名为 "findma"，此处必须保持一致，
+# 否则 CI 会覆盖本文件中的 name 并尝试自动提 PR 修正。
+name = "findma"
 main = "src/index.ts"
 compatibility_date = "2024-11-01"
 
@@ -7,11 +9,11 @@ compatibility_date = "2024-11-01"
 # compatibility_flags = ["nodejs_compat"]
 
 # ── D1 数据库（对应 DESIGN.md 中的"D2"，官方产品名为 D1）────────────────
-# 执行 `npm run db:create` 后，把返回的 database_id 回填到下面
+# database_id 为 D1 的真实 UUID（`npm run db:create` 或 `wrangler d1 list` 获取）
 [[d1_databases]]
 binding = "DB"
 database_name = "findma"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "5fb6feaf-456f-482e-999c-a9c13bc7b4db"
 
 # ── Cron Triggers（DESIGN 6.6）─────────────────────────────────────────
 # 每小时：失联检测 / 恢复检测；每天 03:00：清理过期轨迹
@@ -33,7 +35,7 @@ MAX_AVATAR_BYTES = "102400"           # 头像 base64 解码后最大字节数�
 # JWT_SECRET = "..."
 
 # ── 自定义域名（DESIGN 11 章：workers.dev 在大陆不稳定，必须绑自定义域名）──
-# 在 Cloudflare Dashboard → Workers → findma-worker → Settings → Domains & Routes 添加
+# 在 Cloudflare Dashboard → Workers → findma → Settings → Domains & Routes 添加
 # [[routes]]
 # pattern = "findma.example.com"
 # custom_domain = true

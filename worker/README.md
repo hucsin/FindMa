@@ -71,6 +71,58 @@ curl "http://127.0.0.1:8791/__scheduled?cron=0+*+*+*+*"   # 手动跑一次失�
 `node_modules` 里已含 `wrangler`，本地开发不需要 Cloudflare 账号；
 `wrangler d1 execute findma --local` 可以直接查本地 SQLite。
 
+## 部署到 Cloudflare
+
+已接入 **Workers Builds**：推送到 GitHub `main` 会自动触发构建与部署。
+CI 侧固定的 Worker 名是 **`findma`**，所以 `wrangler.toml` 的 `name` 必须与它一致，
+否则会出现 `Failed to match Worker name` 警告，CI 会覆盖该字段并尝试自动提 PR 修正配置。
+
+首次部署（或换 Cloudflare 账号）必须按顺序做三件事，**缺任何一步部署都会失败**：
+
+```bash
+cd worker
+npm install
+
+# ① D1 数据库：创建后把 uuid 回填到 wrangler.toml 的 database_id
+npx wrangler d1 create findma
+npx wrangler d1 list          # 库已存在时用这个查 uuid
+
+# ② 把建表脚本应用到【远程】库（不加 --remote 只会动本地）
+npm run db:init:remote
+
+# ③ 写入运行时密钥（缺它所有需要登录的接口都会返回 SERVER_MISCONFIGURED）
+npm run secret:jwt
+```
+
+### 当前线上状态
+
+| 项 | 值 |
+|---|---|
+| Worker 名 | `findma` |
+| D1 数据库 | `findma` · `5fb6feaf-456f-482e-999c-a9c13bc7b4db` |
+| 远程表 | 8 张（已执行 `db:init:remote`） |
+| `JWT_SECRET` | 已通过 `wrangler secret put` 写入 |
+| wrangler | v4（`^4.130.0`，v3 已进入维护状态，CI 会提示升级） |
+
+### 常见报错
+
+| 报错 / 现象 | 原因 | 处理 |
+|---|---|---|
+| `binding DB of type d1 must have a valid database_id [code: 10021]` | `wrangler.toml` 的 `database_id` 还是占位符 | 按上面 ① 回填真实 uuid 后重新推送 |
+| `Failed to match Worker name` | `wrangler.toml` 的 `name` 与 CI 不一致 | 保持 `name = "findma"` |
+| 部署成功但登录返回 `SERVER_MISCONFIGURED` | 没写 `JWT_SECRET` | 按上面 ③ 执行 `npm run secret:jwt` |
+| `You are about to publish a Workers Service that was last published via the Cloudflare Dashboard` | Worker 最早是在 Dashboard 建的 | 正常提示，确认即可；之后以仓库配置为准 |
+| 改了 `database_id` 后本地表"消失" | 本地 D1 文件按 `database_id` 哈希命名存放 | 重跑 `npm run db:init:local` |
+
+### 推送前的本地自检
+
+CI 失败一次要等好几分钟，推送前可以先在本地把同样的检查跑一遍：
+
+```bash
+npx tsc --noEmit                      # 类型检查
+npx wrangler deploy --dry-run         # 只打包不上传，能验证配置与绑定
+```
+
 ## 参数调优（wrangler.toml 的 [vars]）
 
 | 变量 | 默认 | 含义 |
