@@ -58,10 +58,13 @@ npm run deploy                # ③ 手动部署（CI 会自动执行这一步�
 >   `binding DB of type d1 must have a valid database_id [code: 10021]`
 >   用 `npx wrangler d1 list` 查已有库的 uuid。
 >
-> ⚠️ **必须绑定自定义域名**（DESIGN 11 章）：`*.workers.dev` 在大陆访问不稳定。
-> 在 Cloudflare Dashboard → Workers → findma → Settings → Domains & Routes 添加。
+> ⚠️ **必须绑定自定义域名**（DESIGN 11 章）：`*.workers.dev` 在大陆**被 DNS 污染、完全不通**
+> （实测不同 DNS 解析出 Meta / Twitter 等无关 IP，TCP 直接超时）。
+> 注意「部署成功」不等于「手机能访问」。在 Cloudflare Dashboard → Workers → findma →
+> Settings → Domains & Routes 添加 Custom Domain。
 >
-> 详细的部署步骤与常见报错见 [`worker/README.md`](worker/README.md#部署到-cloudflare)。
+> 详细的部署步骤、常见报错与自定义域名说明见
+> [`worker/README.md#部署到-cloudflare`](worker/README.md#部署到-cloudflare)。
 
 ### 2. 老人端（Android）
 

@@ -123,6 +123,29 @@ npx tsc --noEmit                      # 类型检查
 npx wrangler deploy --dry-run         # 只打包不上传，能验证配置与绑定
 ```
 
+### 为什么必须绑自定义域名
+
+`*.workers.dev` 在国内无法直连。实测 `findma.iceet.workers.dev` 用不同 DNS 解析会得到
+一堆互不相干的 IP（Meta / Twitter 网段），属于典型的 **DNS 污染**，TCP 连接直接超时：
+
+| DNS | 解析结果 |
+|---|---|
+| 系统默认 | `104.244.43.167` |
+| 阿里 223.5.5.5 | `69.171.242.11`（Meta 段） |
+| Google 8.8.8.8 | `157.240.10.41` |
+| 114.114.114.114 | `103.240.180.117` |
+
+而同一时间 `api.cloudflare.com` 是通的（所以 `wrangler deploy` 在本地能正常跑完）。
+**部署成功 ≠ 手机能访问**，必须绑定自定义域名：
+
+1. 把域名 NS 托管到 Cloudflare（或已在同一账号下）
+2. 取消 `wrangler.toml` 末尾 `[[routes]]` 的注释并改成你的域名，
+   或到 Dashboard → Workers → `findma` → Settings → Domains & Routes 添加 Custom Domain
+3. 重新推送，CI 会自动部署并生效
+
+> **小技巧**：绑定后可先在本机验证 `curl https://<你的域名>/health`，
+> 再改两端 App 的 `API_BASE`。
+
 ## 参数调优（wrangler.toml 的 [vars]）
 
 | 变量 | 默认 | 含义 |
