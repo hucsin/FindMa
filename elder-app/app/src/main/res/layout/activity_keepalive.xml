@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <!-- ── 机型识别 + 说明 ──────────────────────────────────────── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/CardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/keepalive_title" />
+
+            <TextView
+                android:id="@+id/tvBrand"
+                style="@style/CardBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="—" />
+
+            <TextView
+                style="@style/CardBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/keepalive_intro" />
+        </LinearLayout>
+
+        <!-- ── 分品牌步骤指引 ───────────────────────────────────────── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/CardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/keepalive_steps_title" />
+
+            <TextView
+                android:id="@+id/tvSteps"
+                style="@style/CardBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="—" />
+        </LinearLayout>
+
+        <!-- ── 快捷跳转 ─────────────────────────────────────────────── -->
+        <Button
+            android:id="@+id/btnAutostart"
+            style="@style/BigButton"
+            android:text="@string/btn_open_autostart" />
+
+        <Button
+            android:id="@+id/btnBatteryOpt"
+            style="@style/BigButton"
+            android:text="@string/btn_open_battery" />
+
+        <Button
+            android:id="@+id/btnAppInfo"
+            style="@style/BigButton"
+            android:text="@string/btn_open_appinfo" />
+
+        <Button
+            android:id="@+id/btnDone"
+            style="@style/BigButton"
+            android:text="@string/btn_keepalive_done" />
+    </LinearLayout>
+</ScrollView>

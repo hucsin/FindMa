@@ -1,0 +1,3 @@
+-keep class com.findma.elder.** { *; }
+-dontwarn okhttp3.**
+-dontwarn org.conscrypt.**

@@ -1,0 +1,33 @@
+# 根目录忽略规则
+.workbuddy
+.DS_Store
+*.log
+.env
+.idea/
+.vscode/
+*.iml
+
+# Worker
+worker/node_modules/
+worker/.wrangler/
+worker/.dev.vars
+worker/dist/
+
+# Android
+elder-app/.gradle/
+elder-app/build/
+elder-app/app/build/
+elder-app/local.properties
+elder-app/.idea/
+elder-app/captures/
+elder-app/*.jks
+elder-app/*.keystore
+
+# Flutter
+guardian-app/.dart_tool/
+guardian-app/build/
+guardian-app/.flutter-plugins
+guardian-app/.flutter-plugins-dependencies
+guardian-app/ios/Pods/
+guardian-app/android/.gradle/
+guardian-app/ios/.symlinks/

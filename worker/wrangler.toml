@@ -1,0 +1,39 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "findma-worker"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+
+# 若用到 node 内置模块（如 Buffer）时打开；当前实现纯 WebCrypto，无需 nodejs_compat
+# compatibility_flags = ["nodejs_compat"]
+
+# ── D1 数据库（对应 DESIGN.md 中的"D2"，官方产品名为 D1）────────────────
+# 执行 `npm run db:create` 后，把返回的 database_id 回填到下面
+[[d1_databases]]
+binding = "DB"
+database_name = "findma"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+# ── Cron Triggers（DESIGN 6.6）─────────────────────────────────────────
+# 每小时：失联检测 / 恢复检测；每天 03:00：清理过期轨迹
+[triggers]
+crons = ["0 * * * *", "0 3 * * *"]
+
+# ── 非敏感配置（业务参数，全部可在 Dashboard 调整）──────────────────────
+[vars]
+DEFAULT_NORMAL_INTERVAL_SEC = "1200"  # 普通模式上报间隔，默认 20 分钟
+DEFAULT_LOST_INTERVAL_SEC = "60"      # 丢失模式默认上报间隔
+FENCE_BUFFER_M = "50"                 # 围栏缓冲带（防边界抖动）
+FENCE_ACCURACY_GATE_M = "150"         # 精度门槛：acc 大于该值的点不参与围栏判定
+LOW_BATTERY_THRESHOLD = "20"          # 低电告警阈值（%）
+OFFLINE_MIN_SEC = "7200"              # 失联判定下限：max(3×当前间隔, 该值)
+LOCATION_RETENTION_DAYS = "180"       # 轨迹保留天数
+MAX_AVATAR_BYTES = "102400"           # 头像 base64 解码后最大字节数（100KB）
+
+# ── 敏感配置：用 `npm run secret:jwt` 写入，不要写进该文件 ───────────────
+# JWT_SECRET = "..."
+
+# ── 自定义域名（DESIGN 11 章：workers.dev 在大陆不稳定，必须绑自定义域名）──
+# 在 Cloudflare Dashboard → Workers → findma-worker → Settings → Domains & Routes 添加
+# [[routes]]
+# pattern = "findma.example.com"
+# custom_domain = true

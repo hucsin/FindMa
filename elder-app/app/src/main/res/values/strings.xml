@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">FindMa 守护</string>
+    <string name="keepalive_title">保活设置引导</string>
+
+    <string name="notif_channel_name">守护运行状态</string>
+    <string name="notif_channel_desc">显示防走失守护的运行状态</string>
+    <string name="notif_title">FindMa 防走失守护运行中</string>
+
+    <string name="status_running">运行状态</string>
+    <string name="btn_start">启动守护</string>
+    <string name="btn_report_now">立即上报</string>
+    <string name="btn_reset_code">重置绑定码</string>
+    <string name="btn_keepalive">保活设置引导</string>
+    <string name="btn_battery">申请电池白名单</string>
+    <string name="btn_vpn">授权网络守护</string>
+    <string name="bind_code_hint">用子女端「添加老人」扫描上方二维码，或手动输入下方绑定码</string>
+
+    <!-- 保活设置引导页（DESIGN 7.6） -->
+    <string name="keepalive_intro">国产手机的省电策略会在后台清理 App，导致守护中断。请按下面的指引手动放行，系统升级后建议复查一次。</string>
+    <string name="keepalive_brand_fmt">当前机型：%1$s</string>
+    <string name="keepalive_steps_title">需要开启的三项</string>
+    <string name="btn_open_autostart">① 打开「自启动」设置</string>
+    <string name="btn_open_battery">② 加入电池优化白名单</string>
+    <string name="btn_open_appinfo">③ 打开本应用详情页</string>
+    <string name="btn_keepalive_done">我已设置完成</string>
+</resources>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <!-- ── 运行状态 ─────────────────────────────────────────────── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/CardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/status_running" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                style="@style/CardBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="—" />
+
+            <TextView
+                android:id="@+id/tvInfo"
+                style="@style/CardBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="—" />
+        </LinearLayout>
+
+        <!-- ── 绑定二维码 ───────────────────────────────────────────── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_card"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/CardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="绑定二维码" />
+
+            <ImageView
+                android:id="@+id/ivQr"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_marginTop="12dp"
+                android:contentDescription="绑定二维码"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/tvBindCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:letterSpacing="0.25"
+                android:text="—"
+                android:textColor="@color/ink"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/CardBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="@string/bind_code_hint" />
+        </LinearLayout>
+
+        <!-- ── 操作按钮（大字号、防误触）────────────────────────────── -->
+        <Button
+            android:id="@+id/btnStart"
+            style="@style/BigButton"
+            android:layout_marginTop="16dp"
+            android:text="@string/btn_start" />
+
+        <Button
+            android:id="@+id/btnReportNow"
+            style="@style/BigButton"
+            android:text="@string/btn_report_now" />
+
+        <Button
+            android:id="@+id/btnVpn"
+            style="@style/BigButton"
+            android:text="@string/btn_vpn" />
+
+        <Button
+            android:id="@+id/btnBattery"
+            style="@style/BigButton"
+            android:text="@string/btn_battery" />
+
+        <Button
+            android:id="@+id/btnKeepAlive"
+            style="@style/BigButton"
+            android:text="@string/btn_keepalive" />
+
+        <Button
+            android:id="@+id/btnResetCode"
+            style="@style/BigButton"
+            android:text="@string/btn_reset_code" />
+    </LinearLayout>
+</ScrollView>
