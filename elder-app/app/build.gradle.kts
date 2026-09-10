@@ -14,9 +14,12 @@ android {
         versionCode = 1
         versionName = "1.0.0"
 
-        // 部署 Worker 并绑定自定义域名后，把这里改成你的域名（DESIGN 6.1 / 11）
-        buildConfigField("String", "API_BASE", "\"https://findma.example.com/api/v1\"")
+        // 已绑定的自定义域名（DESIGN 6.1 / 11）
+        buildConfigField("String", "API_BASE", "\"https://findma.izao.cc/api/v1\"")
         buildConfigField("String", "APP_USER_AGENT", "\"FindMa-Elder/${versionName}\"")
+
+        // 应用内更新：设置页从这里下载新版本 APK
+        buildConfigField("String", "UPDATE_URL", "\"https://dl.izao.cc/elder.apk\"")
     }
 
     buildFeatures {

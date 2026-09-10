@@ -5,6 +5,9 @@ name = "findma"
 main = "src/index.ts"
 compatibility_date = "2024-11-01"
 
+# workers.dev 在大陆被 DNS 污染（不可达），只走自定义域名，显式关掉避免歧义
+workers_dev = false
+
 # 若用到 node 内置模块（如 Buffer）时打开；当前实现纯 WebCrypto，无需 nodejs_compat
 # compatibility_flags = ["nodejs_compat"]
 
@@ -34,8 +37,9 @@ MAX_AVATAR_BYTES = "102400"           # 头像 base64 解码后最大字节数�
 # ── 敏感配置：用 `npm run secret:jwt` 写入，不要写进该文件 ───────────────
 # JWT_SECRET = "..."
 
-# ── 自定义域名（DESIGN 11 章：workers.dev 在大陆不稳定，必须绑自定义域名）──
-# 在 Cloudflare Dashboard → Workers → findma → Settings → Domains & Routes 添加
-# [[routes]]
-# pattern = "findma.example.com"
-# custom_domain = true
+# ── 自定义域名（DESIGN 11 章：workers.dev 在大陆被 DNS 污染，必须绑自定义域名）──
+# custom_domain = true 会让 Cloudflare 自动建 DNS 记录并签发证书（域名 NS 需托管在本账号）。
+# 写在配置里而不是只在 Dashboard 点，是为了让域名归属跟着代码走、CI 部署不会丢。
+[[routes]]
+pattern = "findma.izao.cc"
+custom_domain = true

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  自适应图标前景层：白色定位针（定位 = 防走失），针头内部用 evenOdd 挖出心形
+  （守护 / 关爱），挖空处透出背景渐变，因此不需要额外配色。
+  108x108 画布，内容限制在中心 66dp 安全区内：
+  定位针 24x24 坐标经 scale 2.2 + translate 27.6 映射后，占用 38.6~76 的范围。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <group
+        android:scaleX="2.2"
+        android:scaleY="2.2"
+        android:translateX="27.6"
+        android:translateY="27.6">
+
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,12.3C11.2,11.6 9.6,10.4 8.9,9.6C8.35,9 8.1,8.4 8.1,7.75C8.1,6.75 8.9,5.95 9.9,5.95C10.6,5.95 11.3,6.35 12,7.05C12.7,6.35 13.4,5.95 14.1,5.95C15.1,5.95 15.9,6.75 15.9,7.75C15.9,8.4 15.65,9 15.1,9.6C14.4,10.4 12.8,11.6 12,12.3z" />
+    </group>
+</vector>

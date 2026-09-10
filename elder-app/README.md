@@ -24,9 +24,11 @@ app/src/main/java/com/findma/elder/
 │   ├── NetworkMonitor.kt             # WiFi / 蜂窝监听
 │   └── Battery.kt
 ├── boot/BootReceiver.kt              # 开机 / 应用更新后恢复守护
+├── update/UpdateManager.kt           # 应用内更新：下载 APK + 拉起系统安装器
 └── ui/
     ├── MainActivity.kt               # 状态页 + 绑定二维码 + 各项授权入口
     ├── KeepAliveActivity.kt          # 保活设置引导
+    ├── SettingsActivity.kt           # 设置页：软件更新（带下载进度）
     └── QrUtil.kt                     # ZXing 本地渲染二维码
 ```
 
@@ -39,11 +41,30 @@ gradle wrapper --gradle-version 8.4
 # 或用 Android Studio 打开 elder-app/ 直接同步
 ```
 
-改 `app/build.gradle.kts`：
+域名与更新地址在 `app/build.gradle.kts`（已指向生产环境）：
 
 ```kotlin
-buildConfigField("String", "API_BASE", "\"https://你的域名/api/v1\"")
+buildConfigField("String", "API_BASE",   "\"https://findma.izao.cc/api/v1\"")
+buildConfigField("String", "UPDATE_URL", "\"https://dl.izao.cc/elder.apk\"")
 ```
+
+## 应用内更新
+
+状态页 →「设置」→「下载并安装新版本」：
+
+1. 先检查「安装未知应用」权限（Android 8.0+ 的**特殊权限**，不是运行时权限，
+   只能在系统设置里手动开）；未授权则跳到系统的授权页，**返回后自动接着下载**
+2. 从 `UPDATE_URL` 流式下载，按钮下方实时显示进度条 + 百分比 + 已下载/总大小
+3. 下载先写 `.part` 再改名，避免断网留下半包被当成完整 APK 安装
+4. 完成后通过 `FileProvider`（`content://`）拉起系统安装器
+
+> 把 APK 放到 `dl.izao.cc` 后，`versionCode` 记得比线上 +1，否则系统会拒绝覆盖安装。
+
+## 图标
+
+自适应图标（`res/mipmap-anydpi-v26/`，minSdk 26 起所有设备都支持）：
+渐变蓝底 + 白色定位针，针头用 `fillType="evenOdd"` 挖出心形（守护含义）。
+带 `<monochrome>` 层，Android 13+ 的「主题图标」也能正确着色。
 
 ## 运行时要做的授权（状态页会依次引导）
 
@@ -60,6 +81,7 @@ buildConfigField("String", "API_BASE", "\"https://你的域名/api/v1\"")
 - 网络、流量守护是否生效、电量、待补传点位数、最近异常
 - **绑定二维码**（内容 `FINDMA-BIND:<bindCode>`）+ 大字号明文绑定码
 - 「重置绑定码」需**长按**（防误触），旧码立即作废
+- 「设置」按钮 → 设置页（软件更新）
 
 ## 与 Worker 的约定
 
@@ -69,6 +91,6 @@ buildConfigField("String", "API_BASE", "\"https://你的域名/api/v1\"")
 
 ## 已知待办
 
-- 尚未在真机编译（本机无 Android SDK），需在 IDE 里同步一轮
 - 多边形围栏绘制未实现（Worker 侧已支持）
 - 保活引导页的 ROM 文案需要按实测机型补充验证
+- 更新功能尚未在真机验证（需要 `dl.izao.cc` 上先有 `elder.apk`）

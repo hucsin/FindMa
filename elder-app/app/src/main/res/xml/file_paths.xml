@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FileProvider 可对外暴露的目录白名单（APK 下载到 cacheDir/update/） -->
+<paths>
+    <cache-path
+        name="update"
+        path="update/" />
+</paths>

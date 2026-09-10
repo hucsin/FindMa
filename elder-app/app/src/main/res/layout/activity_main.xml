@@ -114,6 +114,11 @@
             android:text="@string/btn_keepalive" />
 
         <Button
+            android:id="@+id/btnSettings"
+            style="@style/BigButton"
+            android:text="@string/btn_settings" />
+
+        <Button
             android:id="@+id/btnResetCode"
             style="@style/BigButton"
             android:text="@string/btn_reset_code" />

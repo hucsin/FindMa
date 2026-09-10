@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../api/api_client.dart';
+import '../app_config.dart';
 import '../models/models.dart';
 import '../state/providers.dart';
+import '../widgets/update_card.dart';
 
 /// 设置（DESIGN 8.1）：上报频率（按老人设置）、数据保留期说明、关于、退出登录
 class SettingsPage extends ConsumerWidget {
@@ -57,7 +59,7 @@ class SettingsPage extends ConsumerWidget {
           const ListTile(
             leading: Icon(Icons.info_outline),
             title: Text('版本'),
-            subtitle: Text('0.1.0（M1~M6 骨架）'),
+            subtitle: Text('${AppConfig.appVersion}（M1~M6 骨架）'),
           ),
           const ListTile(
             leading: Icon(Icons.privacy_tip_outlined),
@@ -65,6 +67,9 @@ class SettingsPage extends ConsumerWidget {
             subtitle: Text('位置数据仅存于自有 Cloudflare D1，不经过第三方；老人端 token 仅存手机本地'),
             isThreeLine: true,
           ),
+
+          const _SectionHeader('更新'),
+          const UpdateCard(),
 
           const SizedBox(height: 12),
           Padding(

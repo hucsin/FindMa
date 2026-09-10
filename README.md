@@ -60,8 +60,14 @@ npm run deploy                # ③ 手动部署（CI 会自动执行这一步�
 >
 > ⚠️ **必须绑定自定义域名**（DESIGN 11 章）：`*.workers.dev` 在大陆**被 DNS 污染、完全不通**
 > （实测不同 DNS 解析出 Meta / Twitter 等无关 IP，TCP 直接超时）。
-> 注意「部署成功」不等于「手机能访问」。在 Cloudflare Dashboard → Workers → findma →
-> Settings → Domains & Routes 添加 Custom Domain。
+> 注意「部署成功」不等于「手机能访问」。域名已配好并在 `wrangler.toml` 里声明：
+>
+> ```toml
+> workers_dev = false
+> [[routes]]
+> pattern = "findma.izao.cc"
+> custom_domain = true
+> ```
 >
 > 详细的部署步骤、常见报错与自定义域名说明见
 > [`worker/README.md#部署到-cloudflare`](worker/README.md#部署到-cloudflare)。
@@ -78,8 +84,15 @@ cd elder-app
 Gradle Wrapper（8.4）已随仓库提供；`local.properties` 由 Android Studio 或本地脚本生成
 （内容为 `sdk.dir=/path/to/Android/sdk`）。
 
-改 `app/build.gradle.kts` 里的 `API_BASE` 为你部署的域名，然后编译安装到老人手机。
+域名与更新地址已写在 `app/build.gradle.kts`（无需再手改）：
+
+```kotlin
+buildConfigField("String", "API_BASE",   "\"https://findma.izao.cc/api/v1\"")
+buildConfigField("String", "UPDATE_URL", "\"https://dl.izao.cc/elder.apk\"")
+```
+
 首次打开按状态页指引依次完成：定位权限 → 后台定位 → 通知权限 → 精确定时 → 电池白名单 → VPN 授权。
+状态页 →「设置」内可检查并安装新版本（带下载进度）。
 
 ### 3. 子女端（Flutter）
 
@@ -90,7 +103,7 @@ flutter pub get
 flutter build apk --debug
 # 产物：build/app/outputs/flutter-apk/app-debug.apk
 
-# 联调（Android 模拟器访问宿主机用 10.0.2.2）
+# 联调（Android 模拟器访问宿主机用 10.0.2.2）时才需要覆盖默认域名
 flutter run \
   --dart-define=API_BASE=http://10.0.2.2:8791/api/v1 \
   --dart-define=TDT_KEY=你在天地图申请到的Key
@@ -99,7 +112,7 @@ flutter run \
 依赖：Flutter 3.29+（本仓库在 3.47.3 上验证）、JDK 21、Android SDK（platform 36、build-tools 36）。
 `android/` 平台目录由 `flutter create` 生成，已随仓库提交。
 
-真机/发布时把 `API_BASE` 指向已绑定域名的 Worker。
+默认 `API_BASE` 已是 `https://findma.izao.cc/api/v1`；设置页 →「软件更新」可下载安装新版本（带下载进度）。
 
 ## 国内网络：首次构建的两个大坑
 

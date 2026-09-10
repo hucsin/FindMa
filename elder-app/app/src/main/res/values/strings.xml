@@ -23,4 +23,27 @@
     <string name="btn_open_battery">② 加入电池优化白名单</string>
     <string name="btn_open_appinfo">③ 打开本应用详情页</string>
     <string name="btn_keepalive_done">我已设置完成</string>
+
+    <!-- 设置页 / 应用内更新 -->
+    <string name="settings_title">设置</string>
+    <string name="btn_settings">设置</string>
+    <string name="settings_version_title">当前版本</string>
+    <string name="settings_version_fmt">FindMa 守护 %1$s（Build %2$d）</string>
+    <string name="settings_update_title">软件更新</string>
+    <string name="settings_update_intro">点击下方按钮下载最新版本。安装时手机可能弹出确认框，请点「安装」。</string>
+    <string name="btn_update">下载并安装新版本</string>
+    <string name="settings_perm_needed">尚未允许「安装未知应用」，点击按钮后会先跳到系统设置授权。</string>
+    <string name="settings_perm_ready">已允许「安装未知应用」，可以直接下载安装。</string>
+    <string name="settings_update_source_fmt">下载地址：%1$s</string>
+    <string name="update_connecting">正在连接服务器…</string>
+    <string name="update_installing">下载完成，正在启动安装…</string>
+    <string name="update_failed_fmt">更新失败：%1$s</string>
+    <string name="update_perm_toast">需要先允许「安装未知应用」</string>
+    <string name="update_perm_denied_toast">尚未允许安装未知应用</string>
+    <string name="update_perm_granted_toast">已获得授权，开始下载</string>
+    <string name="update_perm_no_page_toast">无法打开授权页面，请到系统设置中手动允许</string>
+    <string name="update_started_toast">开始下载，请在下方查看进度</string>
+    <string name="update_done_toast">请在系统弹窗中点击「安装」</string>
+    <string name="update_error_toast">下载失败，请检查网络后重试</string>
+    <string name="update_busy_toast">正在下载中，请稍候…</string>
 </resources>

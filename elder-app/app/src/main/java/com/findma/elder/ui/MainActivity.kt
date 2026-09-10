@@ -83,6 +83,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, KeepAliveActivity::class.java))
         }
 
+        findViewById<Button>(R.id.btnSettings).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
         // 重置绑定码需长按确认（防误触）
         findViewById<Button>(R.id.btnResetCode).setOnClickListener {
             toast("重置绑定码请长按（防误触）")
