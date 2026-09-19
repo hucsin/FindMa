@@ -1,6 +1,6 @@
 # FindMa · 老人防丢系统
 
-针对精神疾病老人走失风险的三端防护系统。设计方案见 [`DESIGN.md`](./DESIGN.md)。
+针对老人走失风险的三端防护系统。设计方案见 [`DESIGN.md`](./DESIGN.md)。
 
 ```
 FindMa/
